@@ -1,37 +1,52 @@
 import 'emoji-log';
 import browser from 'webextension-polyfill';
-
-function openWebPage(url) {
-  return browser.tabs.create({url});
-}
+import fetch from 'node-fetch';
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const tabs = await browser.tabs.query({
-    active: true,
-    lastFocusedWindow: true,
-  });
+  console.log("START")
+  let jwt;
+  await browser.storage.local.get('token').then(({token}) => {
+    jwt = token;
+  })
 
-  const url = tabs.length && tabs[0].url;
+  // Already Login
+  if(jwt){
+    document.getElementById("login-form").classList.add('hidden')
 
-  const response = await browser.runtime.sendMessage({
-    msg: 'hello',
-    url,
-  });
+    document.getElementById("login-success").classList.remove('hidden')
+  }
 
-  // eslint-disable-next-line no-console
-  console.emoji('🦄', response);
+  // Login method!
+  document.getElementById('login-submit').addEventListener('click', () => {
+    const form = {};
 
-  document.getElementById('github__button').addEventListener('click', () => {
-    return openWebPage(
-      'https://github.com/abhijithvijayan/web-extension-starter'
-    );
-  });
+    form.username = document.getElementById('username').value;
+    form.password = document.getElementById('password').value;
 
-  document.getElementById('donate__button').addEventListener('click', () => {
-    return openWebPage('https://www.buymeacoffee.com/abhijithvijayan');
-  });
+    if(form.username && form.password){
+      const query = JSON.stringify({ query: `query { authorizationToken(username:"${form.username}", password:"${form.password}") }` });
 
-  document.getElementById('options__button').addEventListener('click', () => {
-    return openWebPage('options.html');
+      fetch("http://localhost:8080/", {
+        method: 'POST',
+        body: query,
+        headers: {
+          'content-Type': 'application/json'
+        }
+      }).then(async response => {
+        const json = await response.json();
+        if(json.data.authorizationToken){
+          document.getElementById("login-form").classList.add('hidden')
+  
+          browser.storage.local.set({token: json.data.authorizationToken.token })
+  
+  
+          browser.storage.local.get('token').then(({token}) => {
+            console.log("token -> ", token)
+          })
+        }
+        // Handle wrong credentials 
+
+      })
+    }
   });
 });

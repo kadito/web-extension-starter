@@ -1,15 +1,26 @@
 import 'emoji-log';
 import browser from 'webextension-polyfill';
 
-browser.runtime.onInstalled.addListener(() => {
-  // eslint-disable-next-line no-console
-  console.emoji('🦄', 'onInstalled....');
-});
 
-browser.runtime.onMessage.addListener((_request, _sender, _sendResponse) => {
-  // Do something with the message!
-  // alert(request.url);
+browser.webRequest.onBeforeSendHeaders.addListener(
+  async function(details) {
+    console.log(details)
+    let jwt;
+    await browser.storage.local.get('token').then(({token}) => {
+      jwt = token;
+    })
 
-  // And respond back to the sender.
-  return Promise.resolve('got your message, thanks!');
-});
+    // Possible to remove -> CRM don't have authorization Header
+    let index = details.requestHeaders.findIndex(req => req.name.toLowerCase() === 'Authorization')
+    details.requestHeaders.splice(index, 1);
+
+    details.requestHeaders.push({
+      name: "Authorization",
+      value: `teste 123`
+    })
+    
+    return {requestHeaders: details.requestHeaders};
+  },
+  {urls: ["<all_urls>"]},
+  ["blocking", "requestHeaders"]
+);

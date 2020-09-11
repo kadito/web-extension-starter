@@ -11,21 +11,23 @@
 <body>
 
   <section id="popup">
-    <h2>WEB-EXTENSION-STARTER</h2>
-    <button id="options__button">Options Page</button>
-    <div class="links__holder">
-      <ul>
-        <li>
-          <button type="button" id="github__button">
-            GitHub
-          </button>
-        </li>
-        <li>
-          <button type="button" id="donate__button">
-            Buy Me A Coffee
-          </button>
-        </li>
-      </ul>
+    <h2 class="text-center">CRM EXTENSION</h2>
+    <div id="login-form">
+      <h3 class="text-center">Login</h3>
+      <form class="text-center" action="http://localhost:8080/">
+        <div class="my1">
+          <label for="username">Username: </label>
+          <input type="text" required id="username"/>
+        </div>
+        <div class="my1">
+          <label for="password">Password: </label>
+          <input type="password" required id="password"/>
+        </div>
+        <button type="submit" id="login-submit">Entrar</button>
+     </form>
+    </div>
+    <div id="login-success" class="hidden full-height flex justify-center">
+      tudo ready
     </div>
   </section>
 </body>
