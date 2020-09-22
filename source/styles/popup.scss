@@ -11,9 +11,25 @@ body {
   text-align: center;
 }
 
+.button{
+  margin-top: 0.5rem;
+  padding: 0.5rem 2rem;
+
+  cursor: pointer;
+  border: 1px solid black;
+}
+
 .my1 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+}
+
+.mt2{
+  margin-top: 1rem;
+}
+
+.mt3{
+  margin-top: 2.5rem;
 }
 
 .hidden {
@@ -28,17 +44,29 @@ body {
   display: flex;
 }
 
+.justify-start {
+  justify-content: flex-start;
+}
+
 .justify-center {
   justify-content: center;
 }
 
 #popup {
   min-width: 350px;
-  padding: 30px 20px;
+  padding: 30px 20px 20px 20px;
 
   h2 {
     font-size: 25px;
     text-align: center;
   }
+}
 
+#login-error{
+  color: red;
+  margin-left: 40px;
+}
+
+.check-icon{
+  color: green;
 }

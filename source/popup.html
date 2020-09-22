@@ -23,11 +23,14 @@
           <label for="password">Password: </label>
           <input type="password" required id="password"/>
         </div>
-        <button type="submit" id="login-submit">Entrar</button>
+        <button type="submit" id="login-submit" class="button">Entrar</button>
      </form>
     </div>
-    <div id="login-success" class="hidden full-height justify-center">
-      tudo ready
+    <div id="login-error" class="hidden justify-start mt2">
+      <p>* Bad credentials</p>
+    </div>
+    <div id="login-success" class="hidden justify-center mt3">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="#4CAF50" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-1.25 17.292l-4.5-4.364 1.857-1.858 2.643 2.506 5.643-5.784 1.857 1.857-7.5 7.643z"/></svg>
     </div>
   </section>
 </body>

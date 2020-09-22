@@ -9,6 +9,7 @@ browser.storage.local.get('token').then(({token}) => {
 browser.webRequest.onBeforeSendHeaders.addListener(
   (details) => {
     // Only if we have a Token on extension storage
+    console.log(JWT);
     if (JWT) {
       // Remove Authorization Header
       const index = details.requestHeaders.findIndex(
